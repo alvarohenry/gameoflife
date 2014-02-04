@@ -3,46 +3,74 @@
 #
 # gameLife.py
 # 
-# Alumno: Alvaro Henry Mamani Aliaga
+# Author: Alvaro Henry Mamani Aliaga
 #
 
 from gi.repository import Gtk
+import rectagleGrid as rg
 
 class GameLife(Gtk.Window):
 	def __init__(self):
-		Gtk.Window.__init__(self, title="Conway's Game if Life")
+		Gtk.Window.__init__(self, title="Juego de la Vida de Conway")
 		
 		# Boxes container
 		mainBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
 		self.add(mainBox)
-		optionsBox = Gtk.Box(spacing=10)
-		
+
 		# options Box
+		dimensionBox = Gtk.Box(spacing=10)
+		labelDimension = Gtk.Label("Ingrese dimension de la matriz (Por defecto = 100)")
+		self.entryDimension = Gtk.Entry()
+		dimensionBox.pack_start(labelDimension, True, True, 0)
+		dimensionBox.pack_start(self.entryDimension, True, True, 0)
+		mainBox.pack_start(dimensionBox, True, True, 0)
+
 		# Plive
-		labelPlive = Gtk.Label("Enter Plive (Default PLive = 0.5)")
-		optionsBox.pack_start(labelPlive, True, True, 0)
-		
-		self.entryPlive = Gtk.Entry()
-		optionsBox.pack_start(self.entryPlive, True, True, 0)
+		pLiveBox = Gtk.Box(spacing=10)
+		labelPlive = Gtk.Label("Ingrese Plive (Por defecto = 0.5)")
+		self.entryPLive = Gtk.Entry()
+		pLiveBox.pack_start(labelPlive, True, True, 0)
+		pLiveBox.pack_start(self.entryPLive, True, True, 0)
+		mainBox.pack_start(pLiveBox, True, True, 0)
 		
 		# Prand
-		labelPrand = Gtk.Label("Enter Prand")
-		optionsBox.pack_start(labelPrand, True, True, 0)
-		
-		self.entryPrand = Gtk.Entry()
-		optionsBox.pack_start(self.entryPrand, True, True, 0)
+		pRandBox = Gtk.Box(spacing=10)
+		labelPrand = Gtk.Label("Ingrese Prand")
+		self.entryPRand = Gtk.Entry()
+		pRandBox.pack_start(labelPrand, True, True, 0)
+		pRandBox.pack_start(self.entryPRand, True, True, 0)
+		mainBox.pack_start(pRandBox, True, True, 0)
 		
 		# Start Game Button
 		button = Gtk.Button("Start Game")
 		button.connect("clicked", self.on_click_start_button)
-		optionsBox.pack_start(button, True, True, 0)
+		mainBox.pack_start(button, True, True, 0)
 
-		mainBox.pack_start(optionsBox, True, True, 0)
-
-
+	def set_dimension(self):
+		if self.entryDimension.get_text() == "" or self.entryDimension.get_text() == None:
+			self.dimension = 100
+		else:
+			self.dimension = self.entryDimension.get_text()
+			
+	def set_pLife(self):
+		if self.entryPLive.get_text() == "" or self.entryPLive.get_text() == None:
+			self.pLife = 0.5
+		else:
+			self.pLife = self.entryPLive.get_text()
+		
+	def set_pRand(self):
+		if self.entryPRand.get_text() == "" or self.entryPRand.get_text() == None:
+			self.pRand = 0.005
+		else:
+			self.pRand = self.entryPRand.get_text()
+		
 	def on_click_start_button(self, button):
 		print "CLick on the start button"
-				
+		self.set_dimension()
+		self.set_pLife()
+		self.set_pRand()
+		rectableGridGame = rg.RectableGridGame(self.dimension, self.pLife, self.pRand)
+		rectableGridGame.printer()
 
 win = GameLife()
 win.connect("delete-event", Gtk.main_quit)
