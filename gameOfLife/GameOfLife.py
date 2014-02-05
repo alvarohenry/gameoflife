@@ -31,7 +31,6 @@ class RectableGridGame():
 		glPointSize(9.0)
 
 		glBegin(GL_POINTS)
-#		while True:
 		for x in range(self.dimension):
 			for y in range(self.dimension):
 				if self.matrix[x][y] == 1:
@@ -41,6 +40,7 @@ class RectableGridGame():
 		glutSwapBuffers()
 
 	def idleFunction(self):
+#print self.matrix
 		self.transition_state()
 		glutPostRedisplay()
 
@@ -74,10 +74,11 @@ class RectableGridGame():
 				
 	def transition_state(self):
 		life_cells = 0
+		tmp_matrix = np.ones((self.dimension, self.dimension)) * -1
 		for x in range(self.dimension):
 			for y in range(self.dimension):
 				if self.activeRand == True and self.rand_probability(self.pRand):
-					self.matrix[x][y] = random.randint(0, 1)
+					tmp_matrix[x][y] = random.randint(0, 1)
 					continue
 				fil = x - 1
 				col = y - 1
@@ -103,8 +104,12 @@ class RectableGridGame():
 				# apply game of life rules
 				# Regla del nacimiento: nace si a su alrededor hay 3 celulas vivas
 				if self.matrix[x][y] == 0 and life_cells == 3: # si estava muerta
-					self.matrix[x][y] = 1	# nace
+					tmp_matrix[x][y] = 1	# nace
 				# Regla de sobrevivencia: permanece vida si hay 2 o 3 celulas vivas a su alrededor
 				if self.matrix[x][y] == 1 and (life_cells < 2 or life_cells > 3): # celula viva
-					self.matrix[x][y] = 0	# muere por soledad o por sobrepoblacion
+					tmp_matrix[x][y] = 0	# muere por soledad o por sobrepoblacion
 				life_cells = 0
+		for x in range(self.dimension):
+			for y in range(self.dimension):
+				if tmp_matrix[x][y] != -1:	
+					self.matrix[x][y] = tmp_matrix[x][y]
