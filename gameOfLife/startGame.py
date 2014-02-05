@@ -7,7 +7,7 @@
 #
 
 from gi.repository import Gtk
-import GameOfLife as gol
+import rectagleGrid as rg
 
 class GameLife(Gtk.Window):
 	def __init__(self):
@@ -69,8 +69,8 @@ class GameLife(Gtk.Window):
 		self.set_dimension()
 		self.set_pLife()
 		self.set_pRand()
-		gameOfLife = gol.RectableGridGame(self.dimension, self.pLife, self.pRand)
-		gameOfLife.main()
+		rectableGridGame = rg.RectableGridGame(self.dimension, self.pLife, self.pRand)
+		rectableGridGame.main()
 
 win = GameLife()
 win.connect("delete-event", Gtk.main_quit)

@@ -13,7 +13,7 @@ import sys
 
 class RectableGridGame():
 	def __init__(self, dimension, pLife, pRand):
-		print "Game of Life. Probability life is", pLife, "Matrix dimension is", dimension
+		print "la probabilidad en RectableGridGame es", pLife, dimension
 		self.dimension = int(dimension)
 		self.pLife = float(pLife)
 		self.pRand = float(pRand)
