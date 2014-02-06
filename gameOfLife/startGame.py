@@ -46,9 +46,8 @@ class GameLife(Gtk.Window):
 		labelBox.pack_start(labelPrand, True, True, 0)
 		entryBox.pack_start(self.entryPRand, True, True, 0)
 		
-
-		labelEmpty = Gtk.Label("")
-		labelBox.pack_start(labelEmpty, True, True, 0)
+		labelInstruction = Gtk.Label("La flecha para abajo disminuye la velocidad \nLa fecha para arriba aumenta la velocidad")
+		labelBox.pack_start(labelInstruction, True, True, 0)
 		# Start Game Button
 		button = Gtk.Button("Start Game")
 		button.connect("clicked", self.on_click_start_button)

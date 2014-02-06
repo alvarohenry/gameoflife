@@ -9,6 +9,7 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 import numpy as np
 import random
+import time
 import sys
 
 class RectableGridGame():
@@ -18,6 +19,7 @@ class RectableGridGame():
 		self.pLife = float(pLife)
 		self.pRand = float(pRand)
 		self.activeRand = False
+		self.timeSleep = 0.05
 		self.matrix = np.zeros((self.dimension, self.dimension))
 		self.init_matrix()
 
@@ -41,6 +43,7 @@ class RectableGridGame():
 
 	def idleFunction(self):
 		self.transition_state()
+		time.sleep(self.timeSleep)
 		glutPostRedisplay()
 
 	def keyboardFunction(self, key, x, y):
@@ -48,6 +51,18 @@ class RectableGridGame():
 		if key == 'r' or key == 'R':
 			self.activeRand = not self.activeRand
 		
+	def specialKeyFunction(self, key, x, y):
+		if key == GLUT_KEY_UP:
+			print "glut_key_up"
+			self.timeSleep += 0.20
+			if self.timeSleep > 1.5:
+				self.timeSleep = 1.5
+		if key == GLUT_KEY_DOWN:
+			print "glut_key_down"
+			self.timeSleep -= 0.20
+			if self.timeSleep < 0.05:
+				self.timeSleep = 0.05
+		print "timeSleep", self.timeSleep
 
 	def main(self):
 		glutInit(sys.argv)
@@ -58,6 +73,7 @@ class RectableGridGame():
 		glutDisplayFunc(self.plotGame)
 		glutIdleFunc(self.idleFunction)
 		glutKeyboardFunc(self.keyboardFunction)
+		glutSpecialFunc(self.specialKeyFunction)
 		self.initOpenGl()
 		glutMainLoop()
 
