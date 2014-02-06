@@ -14,37 +14,45 @@ class GameLife(Gtk.Window):
 		Gtk.Window.__init__(self, title="Juego de la Vida de Conway")
 		
 		# Boxes container
-		mainBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+		mainBox = Gtk.Box(spacing=10)
+		mainBox.set_homogeneous(False)
 		self.add(mainBox)
 
+		labelBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)	
+		labelBox.set_homogeneous(False)
+		entryBox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)	
+		entryBox.set_homogeneous(False)
+
+		mainBox.pack_start(labelBox, True, True, 0)
+		mainBox.pack_start(entryBox, True, True, 0)
+
 		# options Box
-		dimensionBox = Gtk.Box(spacing=10)
-		labelDimension = Gtk.Label("Ingrese dimension de la matriz (Por defecto = 50)")
+		labelDimension = Gtk.Label("Ingrese dimension de la matriz \n(Por defecto = 50x50)")
 		self.entryDimension = Gtk.Entry()
-		dimensionBox.pack_start(labelDimension, True, True, 0)
-		dimensionBox.pack_start(self.entryDimension, True, True, 0)
-		mainBox.pack_start(dimensionBox, True, True, 0)
+		labelBox.pack_start(labelDimension, True, True, 0)
+		entryBox.pack_start(self.entryDimension, True, True, 0)
+
+#mainBox.pack_start(dimensionBox, True, True, 0)
 
 		# Plive
-		pLiveBox = Gtk.Box(spacing=10)
-		labelPlive = Gtk.Label("Ingrese Plive (Por defecto = 0.5)")
+		labelPlive = Gtk.Label("Ingrese Plive \n(Por defecto = 0.5)")
 		self.entryPLive = Gtk.Entry()
-		pLiveBox.pack_start(labelPlive, True, True, 0)
-		pLiveBox.pack_start(self.entryPLive, True, True, 0)
-		mainBox.pack_start(pLiveBox, True, True, 0)
+		labelBox.pack_start(labelPlive, True, True, 0)
+		entryBox.pack_start(self.entryPLive, True, True, 0)
 		
 		# Prand
-		pRandBox = Gtk.Box(spacing=10)
-		labelPrand = Gtk.Label("Ingrese Prand (Por defecto = 0.005). Para activar precione R")
+		labelPrand = Gtk.Label("Ingrese Prand \n(Por defecto = 0.005). \nPara activar/desactivar precione R")
 		self.entryPRand = Gtk.Entry()
-		pRandBox.pack_start(labelPrand, True, True, 0)
-		pRandBox.pack_start(self.entryPRand, True, True, 0)
-		mainBox.pack_start(pRandBox, True, True, 0)
+		labelBox.pack_start(labelPrand, True, True, 0)
+		entryBox.pack_start(self.entryPRand, True, True, 0)
 		
+
+		labelEmpty = Gtk.Label("")
+		labelBox.pack_start(labelEmpty, True, True, 0)
 		# Start Game Button
 		button = Gtk.Button("Start Game")
 		button.connect("clicked", self.on_click_start_button)
-		mainBox.pack_start(button, True, True, 0)
+		entryBox.pack_start(button, True, True, 0)
 
 	def set_dimension(self):
 		if self.entryDimension.get_text() == "" or self.entryDimension.get_text() == None:

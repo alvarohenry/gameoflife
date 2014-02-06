@@ -40,10 +40,14 @@ class RectableGridGame():
 		glutSwapBuffers()
 
 	def idleFunction(self):
-#print self.matrix
 		self.transition_state()
 		glutPostRedisplay()
 
+	def keyboardFunction(self, key, x, y):
+		print "press", key
+		if key == 'r' or key == 'R':
+			self.activeRand = not self.activeRand
+		
 
 	def main(self):
 		glutInit(sys.argv)
@@ -53,6 +57,7 @@ class RectableGridGame():
 		glutCreateWindow("Juego de la vida de Conway")
 		glutDisplayFunc(self.plotGame)
 		glutIdleFunc(self.idleFunction)
+		glutKeyboardFunc(self.keyboardFunction)
 		self.initOpenGl()
 		glutMainLoop()
 
